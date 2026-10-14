@@ -1,0 +1,366 @@
+{
+  "results": [
+    {
+      "name": "Server is ready",
+      "passed": true
+    },
+    {
+      "name": "GET /Account/Login",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Account/Login",
+      "passed": true
+    },
+    {
+      "name": "GET /",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Room",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Room",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Room/Create",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Room/Create",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Room/Details/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Room/Details/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Room/Edit/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Room/Edit/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Room/Delete/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Room/Delete/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Department",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Department",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Department/Create",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Department/Create",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Department/Edit/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Department/Edit/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Department/Details/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Department/Details/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Department/Delete/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Department/Delete/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/User",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/User",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/User/Create",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/User/Create",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/User/Edit/3",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/User/Edit/3",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/User/Details/3",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/User/Details/3",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/User/Delete/3",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/User/Delete/3",
+      "passed": true
+    },
+    {
+      "name": "GET /Meeting/Create",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Meeting/Create",
+      "passed": true
+    },
+    {
+      "name": "GET /Meeting/Details/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Meeting/Details/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Meeting/Edit/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Meeting/Edit/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Meeting/Cancel/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Meeting/Cancel/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Meeting/RsvpTracking/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Meeting/RsvpTracking/1",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Meeting",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Meeting",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Report",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Report",
+      "passed": true
+    },
+    {
+      "name": "GET /Profile",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Profile",
+      "passed": true
+    },
+    {
+      "name": "GET /Profile/ChangePassword",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Profile/ChangePassword",
+      "passed": true
+    },
+    {
+      "name": "Authenticated calendar API",
+      "passed": true
+    },
+    {
+      "name": "Seed calendar has three meetings",
+      "passed": true
+    },
+    {
+      "name": "Mutation without antiforgery is rejected",
+      "passed": true
+    },
+    {
+      "name": "GET /Meeting/Create",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Meeting/Create",
+      "passed": true
+    },
+    {
+      "name": "Overlapping form submission returns validation",
+      "passed": true
+    },
+    {
+      "name": "Occupied room removed from availability selector",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Room?SearchString=Lotus&SortOrder=capacity_desc&PageSize=1&Page=1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Room?SearchString=Lotus&SortOrder=capacity_desc&PageSize=1&Page=1",
+      "passed": true
+    },
+    {
+      "name": "Room search/sort/paging HTML",
+      "passed": true
+    },
+    {
+      "name": "GET /",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /",
+      "passed": true
+    },
+    {
+      "name": "Week calendar renders seven days and two seed meetings",
+      "passed": true
+    },
+    {
+      "name": "Next week updates calendar",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Report?From=2026-10-01T00:00&To=2026-11-01T00:00",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Report?From=2026-10-01T00:00&To=2026-11-01T00:00",
+      "passed": true
+    },
+    {
+      "name": "GET /",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Room",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Room",
+      "passed": true
+    },
+    {
+      "name": "GET /Meeting/Create",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Meeting/Create",
+      "passed": true
+    },
+    {
+      "name": "GET /Admin/Report",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Admin/Report",
+      "passed": true
+    },
+    {
+      "name": "GET /Profile",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Profile",
+      "passed": true
+    },
+    {
+      "name": "GET /",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /",
+      "passed": true
+    },
+    {
+      "name": "Calendar fits mobile viewport",
+      "passed": true
+    },
+    {
+      "name": "Mobile navigation opens",
+      "passed": true
+    },
+    {
+      "name": "GET /",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /",
+      "passed": true
+    },
+    {
+      "name": "Employee denied /Admin/Room",
+      "passed": true
+    },
+    {
+      "name": "Employee denied /Meeting/Create",
+      "passed": true
+    },
+    {
+      "name": "GET /Meeting/Details/1",
+      "passed": true
+    },
+    {
+      "name": "No page overflow /Meeting/Details/1",
+      "passed": true
+    },
+    {
+      "name": "No browser script errors",
+      "passed": true
+    }
+  ],
+  "consoleErrors": [],
+  "failures": []
+}

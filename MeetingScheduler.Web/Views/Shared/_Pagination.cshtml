@@ -1,0 +1,13 @@
+@model object
+@{
+dynamic result = Model;
+int pageNumber = result.Page;
+int total = result.TotalPages;
+int count = result.TotalCount;
+string PageUrl(int target) {
+var query = Context.Request.Query.ToDictionary(x => x.Key, x => (string?)x.Value.ToString(), StringComparer.OrdinalIgnoreCase);
+query["Page"] = target.ToString();
+return Context.Request.Path + Microsoft.AspNetCore.Http.QueryString.Create(query).ToString();
+}
+}
+<div class="pagination-bar"><span>@count kết quả · Trang @pageNumber / @Math.Max(1,total)</span><nav aria-label="Phân trang"><ul class="pagination mb-0"><li class="page-item @(pageNumber <= 1 ? "disabled" : "")"><a class="page-link" href="@(pageNumber > 1 ? PageUrl(pageNumber-1) : "#")" aria-label="Trang trước">Trước</a></li>@for(var n=Math.Max(1,pageNumber-2);n<=Math.Min(total,pageNumber+2);n++){<li class="page-item @(n==pageNumber ? "active" : "")"><a class="page-link" href="@PageUrl(n)" aria-current="@(n==pageNumber ? "page" : null)">@n</a></li>}<li class="page-item @(pageNumber >= total ? "disabled" : "")"><a class="page-link" href="@(pageNumber < total ? PageUrl(pageNumber+1) : "#")" aria-label="Trang sau">Sau</a></li></ul></nav></div>

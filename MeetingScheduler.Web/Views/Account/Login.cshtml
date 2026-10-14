@@ -1,0 +1,7 @@
+@model MeetingScheduler.Web.ViewModels.Account.LoginViewModel
+@{ ViewData["Title"]="Đăng nhập"; }
+<div class="auth-form"><div class="page-heading"><h1>Đăng nhập</h1></div><form asp-action="Login" method="post"><div asp-validation-summary="All"></div><input asp-for="ReturnUrl" type="hidden" />
+<div class="mb-3"><label asp-for="Email" class="form-label">Email</label><input asp-for="Email" type="email" autocomplete="username" class="form-control" /><span asp-validation-for="Email"></span></div>
+<div class="mb-3"><label asp-for="Password" class="form-label">Mật khẩu</label><input asp-for="Password" type="password" autocomplete="current-password" class="form-control" /><span asp-validation-for="Password"></span></div>
+<div class="form-check mb-4"><input asp-for="RememberMe" class="form-check-input" /><label asp-for="RememberMe" class="form-check-label">Duy trì đăng nhập</label></div><button type="submit" class="btn btn-primary w-100">Đăng nhập</button></form></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

@@ -1,0 +1,16 @@
+@model MeetingScheduler.Web.ViewModels.Meetings.MeetingEditViewModel
+@using MeetingScheduler.Web.ViewModels.Common
+@{ ViewData["Title"]="Chỉnh sửa cuộc họp"; }
+<div class="page-heading"><h1>@ViewData["Title"]</h1></div>
+<form asp-action="Edit" asp-route-id="@Model.MeetingId" method="post" class="editor" data-meeting-form data-current-user-id="@(Model is MeetingScheduler.Web.ViewModels.Meetings.MeetingDetailsViewModel details ? details.CreatedByUserId.ToString() : User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)" data-availability-url="@Url.Action("Available","Room",new{area=""})">
+<div asp-validation-summary="All"></div><input asp-for="MeetingId" type="hidden" /><input name="RowVersion" type="hidden" value="@Convert.ToBase64String(Model.RowVersion)" />
+<section class="form-section"><h2>Thông tin cuộc họp</h2>
+<div class="mb-3"><label asp-for="Title" class="form-label">Tiêu đề</label><input asp-for="Title" type="text" class="form-control" /><span asp-validation-for="Title"></span></div><div class="mb-3"><label asp-for="Description" class="form-label">Nội dung</label><textarea asp-for="Description" rows="4" class="form-control"></textarea><span asp-validation-for="Description"></span></div>
+<div class="row"><div class="col-md-6"><div class="mb-3"><label asp-for="StartTime" class="form-label">Bắt đầu</label><input asp-for="StartTime" asp-format="{0:yyyy-MM-ddTHH:mm}" type="datetime-local" class="form-control" /><span asp-validation-for="StartTime"></span></div></div><div class="col-md-6"><div class="mb-3"><label asp-for="EndTime" class="form-label">Kết thúc</label><input asp-for="EndTime" asp-format="{0:yyyy-MM-ddTHH:mm}" type="datetime-local" class="form-control" /><span asp-validation-for="EndTime"></span></div></div></div>
+<div class="mb-3"><label asp-for="RoomId" class="form-label">Phòng họp</label><select asp-for="RoomId" class="form-select"><option value="">Chọn phòng họp</option>@foreach(var item in (ViewData["Rooms"] as IEnumerable<MeetingScheduler.Web.ViewModels.Common.LookupItem> ?? [])) { <option value="@item.Id">@item.Name</option> }</select><span asp-validation-for="RoomId"></span></div><button type="button" class="btn btn-outline-secondary" data-check-availability>Kiểm tra phòng trống</button><div class="mt-2" data-availability-status role="status"></div>
+</section><section class="form-section"><h2>Người tham dự</h2><label for="participant-search" class="form-label">Tìm nhân sự</label><input id="participant-search" class="form-control mb-3" type="search" data-participant-search /><div class="participant-list">
+@foreach(var person in (ViewData["Users"] as IEnumerable<LookupItem> ?? [])){<div class="form-check" data-participant><input class="form-check-input" type="checkbox" name="ParticipantIds" id="person-@person.Id" value="@person.Id" checked="@(Model.ParticipantIds.Contains(person.Id))" /><label class="form-check-label" for="person-@person.Id">@person.Name</label></div>}
+</div><span asp-validation-for="ParticipantIds"></span></section>
+<div class="form-actions"><button class="btn btn-primary" type="submit">Lưu thay đổi</button><a class="btn btn-outline-secondary" asp-action="Index">Quay lại</a></div>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /><script src="~/js/room-available.js" asp-append-version="true"></script> }

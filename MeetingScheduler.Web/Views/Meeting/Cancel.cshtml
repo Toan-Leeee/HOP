@@ -1,0 +1,6 @@
+@model MeetingScheduler.Web.ViewModels.Meetings.CancelMeetingViewModel
+@{ ViewData["Title"]="Hủy cuộc họp"; var meeting=ViewData["Meeting"] as MeetingScheduler.Web.ViewModels.Meetings.MeetingDetailsViewModel; }
+<div class="page-heading"><h1>Hủy cuộc họp</h1></div><form class="editor" asp-action="Cancel" asp-route-id="@Model.MeetingId" method="post">
+<div asp-validation-summary="All"></div><input asp-for="MeetingId" type="hidden" /><input type="hidden" name="RowVersion" value="@Convert.ToBase64String(Model.RowVersion)" />
+<div class="alert alert-warning">Xác nhận hủy <strong>@meeting?.Title</strong>? Lịch sử cuộc họp được giữ lại.</div><label asp-for="CancelReason" class="form-label">Lý do hủy</label><textarea asp-for="CancelReason" class="form-control" rows="4"></textarea><span asp-validation-for="CancelReason"></span><div class="form-actions"><button class="btn btn-danger">Xác nhận hủy</button><a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@Model.MeetingId">Quay lại</a></div></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
