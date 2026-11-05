@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using MeetingScheduler.Web.Services;
 using MeetingScheduler.Web.Services.Interfaces;
 using MeetingScheduler.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authentication;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MeetingScheduler.Web.Controllers;
 
 [AutoValidateAntiforgeryToken]
-public class AccountController(IAccountService accounts) : Controller
+public class AccountController(IAccountService accounts, IUserActivityStateService activity) : Controller
 {
     [AllowAnonymous, HttpGet]
     public IActionResult Login(string? returnUrl = null) => View(new LoginViewModel
@@ -66,6 +67,7 @@ public class AccountController(IAccountService accounts) : Controller
         }, CookieAuthenticationDefaults.AuthenticationScheme);
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
             new ClaimsPrincipal(identity), new AuthenticationProperties { IsPersistent = model.RememberMe });
+        activity.StartSession(HttpContext, account.UserId, account.RoleName);
         return Url.IsLocalUrl(model.ReturnUrl)
             ? LocalRedirect(model.ReturnUrl!)
             : RedirectToAction("Index", "Meeting");
@@ -74,6 +76,7 @@ public class AccountController(IAccountService accounts) : Controller
     [Authorize, HttpPost]
     public async Task<IActionResult> Logout()
     {
+        activity.ClearSession(HttpContext);
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction(nameof(Login));
     }

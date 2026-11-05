@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{21B6C61C-A
 		docs\STRUCTURE.md = docs\STRUCTURE.md
 		docs\ENTITY_DICTIONARY.md = docs\ENTITY_DICTIONARY.md
 		docs\ERD.md = docs\ERD.md
+		docs\ERD_MeetingScheduler.drawio = docs\ERD_MeetingScheduler.drawio
 		docs\DATA_FLOW.md = docs\DATA_FLOW.md
 		docs\SCAFFOLD.md = docs\SCAFFOLD.md
 		docs\VERIFICATION.md = docs\VERIFICATION.md

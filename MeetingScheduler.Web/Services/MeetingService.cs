@@ -36,7 +36,7 @@ public class MeetingService(ApplicationDbContext db, IEmailQueue emailQueue, ILo
         if (f.Status.HasValue) q = q.Where(m => m.Status == f.Status);
         if (f.From.HasValue) q = q.Where(m => m.EndTime > f.From);
         if (f.To.HasValue) q = q.Where(m => m.StartTime < f.To);
-        q = f.SortOrder switch { "start" => q.OrderBy(m => m.StartTime).ThenBy(m => m.MeetingId), "title" => q.OrderBy(m => m.Title).ThenBy(m => m.MeetingId), "title_desc" => q.OrderByDescending(m => m.Title).ThenBy(m => m.MeetingId), _ => q.OrderByDescending(m => m.StartTime).ThenBy(m => m.MeetingId) };
+        q = f.SortOrder switch { "start" => q.OrderBy(m => m.StartTime).ThenBy(m => m.MeetingId), "title" => q.OrderBy(m => m.Title).ThenBy(m => m.MeetingId), "title_desc" => q.OrderByDescending(m => m.Title).ThenBy(m => m.MeetingId), _ => q.OrderByDescending(m => m.CreatedAt).ThenByDescending(m => m.MeetingId) };
         var result = await ServiceSupport.PageAsync(q.Select(Map), f, ct);
         cache.Set(cacheKey, result, TimeSpan.FromSeconds(20));
         return result;
