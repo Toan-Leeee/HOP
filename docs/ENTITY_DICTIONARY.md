@@ -49,16 +49,6 @@ Nguồn: bảng G1, file `C:\Users\acer\Downloads\RULES_Phan_tich_task_Thuc_hanh
 | AuditLog | EntityId | int | Bắt buộc (bổ sung) |
 | AuditLog | CreatedAt | datetime | Bắt buộc (bổ sung) |
 | AuditLog | Details | nvarchar(max) | Không bắt buộc (bổ sung) |
-| EmailQueue | EmailQueueId | int | PK, tự tăng; entity theo bản phân công đã chốt |
-| EmailQueue | RecipientEmail | nvarchar(320) | Bắt buộc |
-| EmailQueue | Subject | nvarchar(200) | Bắt buộc |
-| EmailQueue | Body | nvarchar(max) | Bắt buộc |
-| EmailQueue | CreatedAt | datetime | Bắt buộc |
-| EmailQueue | ScheduledAt | datetime | Cho phép null |
-| EmailQueue | Status | nvarchar(20) | Mặc định Pending |
-| EmailQueue | AttemptCount | int | Mặc định 0 |
-| EmailQueue | SentAt | datetime | Cho phép null |
-| EmailQueue | LastError | nvarchar(1000) | Cho phép null |
 
 ## Ánh xạ thực tế cần lưu ý
 
@@ -74,4 +64,4 @@ Nguồn: bảng G1, file `C:\Users\acer\Downloads\RULES_Phan_tich_task_Thuc_hanh
 | Delete behavior | Meeting → MeetingParticipant Cascade; FK còn lại Restrict; disable không kích hoạt cascade |
 | AuditLog.EntityId | ID đối tượng theo EntityName, không phải FK đa hình được SQL Server enforce |
 
-Kiểu nullable trong C#: Phone, Location, Equipment, Description, CancelledAt, CancelledByUserId, CancelReason, UpdatedAt, RespondedAt và Details. Navigation phản ánh quan hệ [ERD.md](ERD.md). EmailQueue là entity bổ sung theo bản phân công hiện hành; `ErrorViewModel` là ViewModel lỗi template, không phải entity.
+Kiểu nullable trong C#: Phone, Location, Equipment, Description, CancelledAt, CancelledByUserId, CancelReason, UpdatedAt, RespondedAt và Details. Navigation phản ánh quan hệ [ERD.md](ERD.md). ErrorViewModel là ViewModel lỗi template, không phải entity thứ tám hay DbSet.

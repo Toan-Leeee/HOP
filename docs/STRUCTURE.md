@@ -19,9 +19,9 @@ MeetingScheduler/
 `-- MeetingScheduler.Web/
     |-- Program.cs                    DI, MVC, xác thực, Session, Serilog, DbContext
     |-- appsettings.json              DefaultConnection và SMTP
-    |-- Models/                       8 entity; Enums/ chứa enum trạng thái
+    |-- Models/                       7 entity; Enums/ chứa enum trạng thái
     |-- Data/
-    |   |-- ApplicationDbContext.cs    DbContext duy nhất, 8 DbSet
+    |   |-- ApplicationDbContext.cs    DbContext duy nhất, 7 DbSet
     |   |-- ApplicationDbContextFactory.cs
     |   |-- Configurations/DomainConfiguration.cs
     |   `-- SeedData.cs
@@ -64,7 +64,7 @@ Tình trạng build/chạy và minh chứng giao diện được ghi riêng tron
 
 | Nội dung | SRS được rules dẫn lại | Baseline theo rules mới |
 |---|---|---|
-| Entity | 6.1 nêu Room/Meeting/MeetingParticipant; 6.2 thêm User và FK Role/Department | 7 entity nghiệp vụ theo phân công gồm EmailQueue; AuditLog là entity bổ sung |
+| Entity | 6.1 nêu Room/Meeting/MeetingParticipant; 6.2 thêm User và FK Role/Department | 7 entity để đáp ứng R02; Role/Department suy ra từ FK; AuditLog ngoài SRS |
 | Tên trường | CreatedByUserId và MeetingParticipant.Status | Giữ tên SRS, không đổi thành OrganizerId/RSVPStatus trong bản cá nhân cũ |
 | Trường bổ sung | SRS không liệt kê đầy đủ Phone, vị trí/thiết bị, thời điểm, RowVersion, metadata hủy | Được triển khai làm baseline suy luận, xem nhãn bổ sung trong dictionary; chưa có xác nhận nhóm |
 | Xóa | SRS 6.3 cấm hard delete dữ liệu có lịch sử | User/Room/Department dùng IsDisabled; Meeting đổi Cancelled, giữ FK và lịch sử |

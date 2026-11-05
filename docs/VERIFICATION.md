@@ -60,8 +60,3 @@ Playwright với Microsoft Edge, desktop 1440 x 1000 và mobile 390 x 844: **90 
 - SMTP chưa được cấu hình, chưa xác nhận gửi email thật. Hàng đợi email là best effort trong bộ nhớ, không có outbox bền vững/retry; lịch họp lưu thành công không đồng nghĩa email đã giao.
 - Phân công thành viên, AuditLog và các trường bổ sung vẫn là baseline theo rules cần nhóm thống nhất; không xem việc code xong là xác nhận phân công.
 - Đây là ứng dụng bài thực hành chạy local; chưa kiểm tra triển khai production, tải lớn hay toàn bộ trường hợp trên mọi trình duyệt.
-
-
-## Cập nhật schema sau bản phân công chốt
-
-Ngày 05/11/2026, source được bổ sung entity `EmailQueue` và migration `AddEmailQueueOutbox` theo phần khởi tạo database. Migration `20261105073158_AddEmailQueueOutbox` đã được áp dụng vào database `MeetingSchedulerLab`; kiểm tra sau cập nhật cho thấy 8 bảng nghiệp vụ và 55 cột. Số liệu 7 bảng/45 cột phía trên là kết quả lịch sử của lần kiểm tra 14/10/2026. BackgroundEmailService hiện vẫn dùng Channel trong bộ nhớ; nối worker với outbox SQL thuộc bước tích hợp email tiếp theo.
