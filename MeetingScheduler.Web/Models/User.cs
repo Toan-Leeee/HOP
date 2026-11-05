@@ -11,6 +11,8 @@ public class User
     public int RoleId { get; set; }
     public int DepartmentId { get; set; }
     public bool IsDisabled { get; set; }
+    public string? PasswordResetTokenHash { get; set; }
+    public DateTime? PasswordResetExpiresAt { get; set; }
     public Role Role { get; set; } = null!;
     public Department Department { get; set; } = null!;
     public ICollection<Meeting> OrganizedMeetings { get; set; } = new List<Meeting>();

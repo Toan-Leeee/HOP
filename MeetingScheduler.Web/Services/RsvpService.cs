@@ -21,7 +21,7 @@ public class RsvpService(ApplicationDbContext db) : IRsvpService
     }
     public async Task<ServiceResult> RespondAsync(int meetingId, int actorUserId, RsvpStatus status, CancellationToken ct = default)
     {
-        if (status is not (RsvpStatus.Accepted or RsvpStatus.Declined)) return ServiceResult.Failure("Vui lòng chọn đồng ý hoặc từ chối tham dự.");
+        if (status is not (RsvpStatus.Accepted or RsvpStatus.Declined or RsvpStatus.Late)) return ServiceResult.Failure("Vui lòng chọn tham dự, từ chối hoặc tham gia muộn.");
         return await db.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
         {
             await using var tx = await db.Database.BeginTransactionAsync(IsolationLevel.Serializable, ct);

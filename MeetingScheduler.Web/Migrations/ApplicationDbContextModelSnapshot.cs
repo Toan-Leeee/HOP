@@ -85,60 +85,6 @@ namespace MeetingScheduler.Web.Migrations
                     b.ToTable("Department", (string)null);
                 });
 
-            modelBuilder.Entity("MeetingScheduler.Web.Models.EmailQueue", b =>
-                {
-                    b.Property<int>("EmailQueueId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmailQueueId"));
-
-                    b.Property<int>("AttemptCount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("LastError")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("RecipientEmail")
-                        .IsRequired()
-                        .HasMaxLength(320)
-                        .HasColumnType("nvarchar(320)");
-
-                    b.Property<DateTime?>("ScheduledAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("SentAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValue("Pending");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("EmailQueueId");
-
-                    b.HasIndex("Status", "ScheduledAt", "CreatedAt");
-
-                    b.ToTable("EmailQueue", (string)null);
-                });
-
             modelBuilder.Entity("MeetingScheduler.Web.Models.Meeting", b =>
                 {
                     b.Property<int>("MeetingId")
@@ -229,6 +175,56 @@ namespace MeetingScheduler.Web.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("MeetingParticipant", (string)null);
+                });
+
+            modelBuilder.Entity("MeetingScheduler.Web.Models.OutgoingEmail", b =>
+                {
+                    b.Property<long>("OutgoingEmailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OutgoingEmailId"));
+
+                    b.Property<int>("Attempts")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AvailableAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("LastError")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int?>("MeetingId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("SentAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("nvarchar(320)");
+
+                    b.HasKey("OutgoingEmailId");
+
+                    b.HasIndex("SentAt", "AvailableAt");
+
+                    b.ToTable("EmailQueue", (string)null);
                 });
 
             modelBuilder.Entity("MeetingScheduler.Web.Models.Role", b =>
@@ -324,6 +320,12 @@ namespace MeetingScheduler.Web.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime?>("PasswordResetExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PasswordResetTokenHash")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasMaxLength(20)

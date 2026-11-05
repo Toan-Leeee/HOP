@@ -20,3 +20,14 @@ public class ChangePasswordViewModel
     [Required(ErrorMessage = "Vui lòng nhập thông tin bắt buộc."), MinLength(8, ErrorMessage = "Mật khẩu phải có ít nhất 8 ký tự."), StringLength(100, ErrorMessage = "Độ dài tối đa là {1} ký tự."), DataType(DataType.Password)] public string NewPassword { get; set; } = "";
     [Compare(nameof(NewPassword), ErrorMessage = "Mật khẩu xác nhận không khớp."), DataType(DataType.Password)] public string ConfirmPassword { get; set; } = "";
 }
+public class ForgotPasswordViewModel
+{
+    [Required(ErrorMessage = "Vui lòng nhập email."), EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ."), StringLength(100)] public string Email { get; set; } = "";
+}
+public class ResetPasswordViewModel
+{
+    [Required] public string Email { get; set; } = "";
+    [Required] public string Token { get; set; } = "";
+    [Required(ErrorMessage = "Vui lòng nhập mật khẩu mới."), MinLength(8, ErrorMessage = "Mật khẩu phải có ít nhất 8 ký tự."), StringLength(100), DataType(DataType.Password)] public string NewPassword { get; set; } = "";
+    [Compare(nameof(NewPassword), ErrorMessage = "Mật khẩu xác nhận không khớp."), DataType(DataType.Password)] public string ConfirmPassword { get; set; } = "";
+}

@@ -5,8 +5,13 @@ using MeetingScheduler.Web.ViewModels.Account;
 using MeetingScheduler.Web.ViewModels.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MeetingScheduler.Web.Services.Email;
+using MeetingScheduler.Web.ViewModels.Email;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Security.Cryptography;
+using System.Text;
 namespace MeetingScheduler.Web.Services;
-public class AccountService(ApplicationDbContext db, UserManager<User> userManager) : IAccountService
+public class AccountService(ApplicationDbContext db, IPasswordHasher<User> hasher, IEmailQueue emailQueue) : IAccountService
 {
     public Task<bool> ValidateSessionAsync(int userId, string roleName, CancellationToken ct = default) =>
         db.Users.AsNoTracking().AnyAsync(u => u.UserId == userId && !u.IsDisabled && !u.Department.IsDisabled && u.Role.RoleName == roleName, ct);
@@ -16,10 +21,11 @@ public class AccountService(ApplicationDbContext db, UserManager<User> userManag
         var email = m.Email.Trim().ToLowerInvariant();
         var user = await db.Users.Include(u => u.Role).Include(u => u.Department).FirstOrDefaultAsync(u => u.Email == email && !u.IsDisabled && !u.Department.IsDisabled, ct);
         if (user == null) return null;
-        bool passwordValid;
-        try { passwordValid = await userManager.CheckPasswordAsync(user, m.Password); }
+        PasswordVerificationResult result;
+        try { result = hasher.VerifyHashedPassword(user, user.PasswordHash, m.Password); }
         catch (FormatException) { return null; }
-        if (!passwordValid) return null;
+        if (result == PasswordVerificationResult.Failed) return null;
+        if (result == PasswordVerificationResult.SuccessRehashNeeded) user.PasswordHash = hasher.HashPassword(user, m.Password);
         db.AuditLogs.Add(ServiceSupport.Audit(user.UserId, "Login", "User", user.UserId));
         await db.SaveChangesAsync(ct);
         return new(user.UserId, user.FullName, user.Email, user.Role.RoleName);
@@ -41,17 +47,38 @@ public class AccountService(ApplicationDbContext db, UserManager<User> userManag
         var error = ServiceSupport.Validate(m); if (error != null) return ServiceResult.Failure(error);
         var user = await db.Users.FirstOrDefaultAsync(u => u.UserId == userId && !u.IsDisabled && !u.Department.IsDisabled, ct);
         if (user == null) return ServiceResult.Failure("Không tìm thấy tài khoản đang hoạt động.");
-        IdentityResult result;
-        try { result = await userManager.ChangePasswordAsync(user, m.CurrentPassword, m.NewPassword); }
+        PasswordVerificationResult result;
+        try { result = hasher.VerifyHashedPassword(user, user.PasswordHash, m.CurrentPassword); }
         catch (FormatException) { return ServiceResult.Failure("Mật khẩu hiện tại không đúng."); }
-        if (!result.Succeeded)
-        {
-            if (result.Errors.Any(e => e.Code == "PasswordMismatch"))
-                return ServiceResult.Failure("Mật khẩu hiện tại không đúng.");
-            return ServiceResult.Failure(string.Join(" ", result.Errors.Select(e => e.Description)));
-        }
-        db.AuditLogs.Add(ServiceSupport.Audit(userId, "ChangePassword", "User", userId));
+        if (result == PasswordVerificationResult.Failed) return ServiceResult.Failure("Mật khẩu hiện tại không đúng.");
+        user.PasswordHash = hasher.HashPassword(user, m.NewPassword);
+        return await ServiceSupport.CommitAsync(db, userId, "ChangePassword", "User", () => userId, ct);
+    }
+    public async Task RequestPasswordResetAsync(string email, string resetUrl, CancellationToken ct = default)
+    {
+        var normalized = email.Trim().ToLowerInvariant();
+        var user = await db.Users.FirstOrDefaultAsync(u => u.Email == normalized && !u.IsDisabled && !u.Department.IsDisabled, ct);
+        if (user == null) return;
+        var token = WebEncoders.Base64UrlEncode(RandomNumberGenerator.GetBytes(32));
+        user.PasswordResetTokenHash = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(token)));
+        user.PasswordResetExpiresAt = DateTime.UtcNow.AddHours(1);
         await db.SaveChangesAsync(ct);
-        return ServiceResult.Success(userId);
+        var separator = resetUrl.Contains('?') ? "&" : "?";
+        var link = resetUrl + separator + "token=" + Uri.EscapeDataString(token);
+        await emailQueue.EnqueueAsync(new(user.Email, "Đặt lại mật khẩu", $"Mở liên kết sau trong vòng 1 giờ để đặt lại mật khẩu:\n{link}"), ct: ct);
+    }
+    public async Task<bool> ResetPasswordAsync(ResetPasswordViewModel m, CancellationToken ct = default)
+    {
+        if (ServiceSupport.Validate(m) != null) return false;
+        var user = await db.Users.FirstOrDefaultAsync(u => u.Email == m.Email.Trim().ToLowerInvariant() && !u.IsDisabled && !u.Department.IsDisabled, ct);
+        if (user?.PasswordResetTokenHash == null || user.PasswordResetExpiresAt <= DateTime.UtcNow) return false;
+        var supplied = SHA256.HashData(Encoding.UTF8.GetBytes(m.Token));
+        byte[] expected;
+        try { expected = Convert.FromBase64String(user.PasswordResetTokenHash); } catch (FormatException) { return false; }
+        if (!CryptographicOperations.FixedTimeEquals(supplied, expected)) return false;
+        user.PasswordHash = hasher.HashPassword(user, m.NewPassword);
+        user.PasswordResetTokenHash = null; user.PasswordResetExpiresAt = null;
+        await db.SaveChangesAsync(ct);
+        return true;
     }
 }

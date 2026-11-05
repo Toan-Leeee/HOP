@@ -40,6 +40,8 @@ public interface IAccountService
     Task<ProfileViewModel?> GetProfileAsync(int userId, CancellationToken ct = default);
     Task<ServiceResult> UpdateProfileAsync(int userId, ProfileViewModel model, CancellationToken ct = default);
     Task<ServiceResult> ChangePasswordAsync(int userId, ChangePasswordViewModel model, CancellationToken ct = default);
+    Task RequestPasswordResetAsync(string email, string resetUrl, CancellationToken ct = default);
+    Task<bool> ResetPasswordAsync(ResetPasswordViewModel model, CancellationToken ct = default);
 }
 public interface IMeetingService
 {

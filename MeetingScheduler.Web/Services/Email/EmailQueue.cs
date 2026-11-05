@@ -1,16 +1,19 @@
-using System.Threading.Channels;
+using MeetingScheduler.Web.Data;
+using MeetingScheduler.Web.Models;
+using Microsoft.EntityFrameworkCore;
 using MeetingScheduler.Web.ViewModels.Email;
 namespace MeetingScheduler.Web.Services.Email;
 public interface IEmailQueue
 {
-    bool TryEnqueue(EmailJob job);
-    IAsyncEnumerable<EmailJob> ReadAllAsync(CancellationToken ct);
+    Task EnqueueAsync(EmailJob job, DateTime? availableAt = null, int? meetingId = null, string kind = "Notification", CancellationToken ct = default);
 }
-public class ChannelEmailQueue(IConfiguration configuration) : IEmailQueue
+public class EmailQueue(ApplicationDbContext db) : IEmailQueue
 {
-    private readonly Channel<EmailJob> channel = Channel.CreateBounded<EmailJob>(new BoundedChannelOptions(500) { SingleReader = true, FullMode = BoundedChannelFullMode.Wait });
-    public bool TryEnqueue(EmailJob job) => SmtpSettings.IsConfigured(configuration) && channel.Writer.TryWrite(job);
-    public IAsyncEnumerable<EmailJob> ReadAllAsync(CancellationToken ct) => channel.Reader.ReadAllAsync(ct);
+    public async Task EnqueueAsync(EmailJob job, DateTime? availableAt = null, int? meetingId = null, string kind = "Notification", CancellationToken ct = default)
+    {
+        db.OutgoingEmails.Add(new OutgoingEmail { To = job.To, Subject = job.Subject, Body = job.Body, AvailableAt = availableAt ?? DateTime.UtcNow, MeetingId = meetingId, Kind = kind });
+        await db.SaveChangesAsync(ct);
+    }
 }
 internal static class SmtpSettings
 {

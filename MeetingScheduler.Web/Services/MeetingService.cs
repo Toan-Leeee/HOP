@@ -8,9 +8,11 @@ using MeetingScheduler.Web.ViewModels.Common;
 using MeetingScheduler.Web.ViewModels.Meetings;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 namespace MeetingScheduler.Web.Services;
-public class MeetingService(ApplicationDbContext db, IEmailQueue emailQueue, ILogger<MeetingService> logger) : IMeetingService
+public class MeetingService(ApplicationDbContext db, IEmailQueue emailQueue, ILogger<MeetingService> logger, IMemoryCache cache) : IMeetingService
 {
+    private static long cacheVersion;
     private static readonly System.Linq.Expressions.Expression<Func<Meeting, MeetingDetailsViewModel>> Map = m => new MeetingDetailsViewModel
     {
         MeetingId = m.MeetingId, Title = m.Title, Description = m.Description, RoomId = m.RoomId,
@@ -24,6 +26,8 @@ public class MeetingService(ApplicationDbContext db, IEmailQueue emailQueue, ILo
     {
         var actor = await ActorAsync(actorUserId, ct);
         if (actor == null) return new() { Page = 1, PageSize = 10 };
+        var cacheKey = $"meeting-list:{Volatile.Read(ref cacheVersion)}:{actorUserId}:{f.SearchString}:{f.RoomId}:{f.CreatedByUserId}:{f.Status}:{f.From:O}:{f.To:O}:{f.SortOrder}:{f.Page}:{f.PageSize}";
+        if (cache.TryGetValue(cacheKey, out PagedResult<MeetingDetailsViewModel>? cached) && cached != null) return cached;
         var q = db.Meetings.AsNoTracking();
         if (actor.RoleId != 1) q = q.Where(m => m.CreatedByUserId == actorUserId || m.Participants.Any(p => p.UserId == actorUserId));
         if (!string.IsNullOrWhiteSpace(f.SearchString)) q = q.Where(m => m.Title.Contains(f.SearchString.Trim()));
@@ -32,14 +36,10 @@ public class MeetingService(ApplicationDbContext db, IEmailQueue emailQueue, ILo
         if (f.Status.HasValue) q = q.Where(m => m.Status == f.Status);
         if (f.From.HasValue) q = q.Where(m => m.EndTime > f.From);
         if (f.To.HasValue) q = q.Where(m => m.StartTime < f.To);
-        q = f.SortOrder switch
-        {
-            "start" => q.OrderBy(m => m.StartTime).ThenBy(m => m.MeetingId),
-            "title" => q.OrderBy(m => m.Title).ThenBy(m => m.MeetingId),
-            "title_desc" => q.OrderByDescending(m => m.Title).ThenBy(m => m.MeetingId),
-            _ => q.OrderByDescending(m => m.CreatedAt).ThenByDescending(m => m.MeetingId)
-        };
-        return await ServiceSupport.PageAsync(q.Select(Map), f, ct);
+        q = f.SortOrder switch { "start" => q.OrderBy(m => m.StartTime).ThenBy(m => m.MeetingId), "title" => q.OrderBy(m => m.Title).ThenBy(m => m.MeetingId), "title_desc" => q.OrderByDescending(m => m.Title).ThenBy(m => m.MeetingId), _ => q.OrderByDescending(m => m.StartTime).ThenBy(m => m.MeetingId) };
+        var result = await ServiceSupport.PageAsync(q.Select(Map), f, ct);
+        cache.Set(cacheKey, result, TimeSpan.FromSeconds(20));
+        return result;
     }
     public async Task<MeetingDetailsViewModel?> GetAsync(int id, int actorUserId, CancellationToken ct = default)
     {
@@ -115,7 +115,7 @@ public class MeetingService(ApplicationDbContext db, IEmailQueue emailQueue, ILo
                 return ServiceResult.Failure("Một yêu cầu đặt phòng khác đang được xử lý. Vui lòng thử lại.");
             }
         });
-        if (result.Succeeded) await QueueNotificationsAsync(result.EntityId!.Value, "Cập nhật lời mời họp", ct);
+        if (result.Succeeded) { InvalidateMeetingLists(); await QueueNotificationsAsync(result.EntityId!.Value, "Cập nhật lời mời họp", ct); }
         return result;
     }
     public async Task<ServiceResult> CancelAsync(CancelMeetingViewModel m, int actorUserId, CancellationToken ct = default)
@@ -152,22 +152,28 @@ public class MeetingService(ApplicationDbContext db, IEmailQueue emailQueue, ILo
                 return ServiceResult.Failure("Một cập nhật cuộc họp khác đang được xử lý. Vui lòng thử lại.");
             }
         });
-        if (result.Succeeded) await QueueNotificationsAsync(m.MeetingId, "Cuộc họp đã hủy", ct);
+        if (result.Succeeded) { InvalidateMeetingLists(); await QueueNotificationsAsync(m.MeetingId, "Cuộc họp đã hủy", ct); }
         return result;
     }
     private async Task QueueNotificationsAsync(int meetingId, string subject, CancellationToken ct)
     {
         try
         {
-            var meeting = await db.Meetings.AsNoTracking().Where(m => m.MeetingId == meetingId).Select(m => new { m.Title, m.StartTime, m.EndTime, m.CancelReason }).SingleAsync(ct);
+            var meeting = await db.Meetings.AsNoTracking().Where(m => m.MeetingId == meetingId).Select(m => new { m.Title, m.StartTime, m.EndTime, m.CancelReason, m.Status }).SingleAsync(ct);
             var recipients = await db.MeetingParticipants.AsNoTracking().Where(p => p.MeetingId == meetingId && !p.User.IsDisabled && !p.User.Department.IsDisabled).Select(p => p.User.Email).ToListAsync(ct);
             foreach (var address in recipients)
-                if (!emailQueue.TryEnqueue(new(address, subject + ": " + meeting.Title, $"{meeting.Title}\n{meeting.StartTime:g} - {meeting.EndTime:g}\n{meeting.CancelReason}")))
-                    logger.LogWarning("Email notification was not queued for meeting {MeetingId} (SMTP unconfigured or queue full).", meetingId);
+                await emailQueue.EnqueueAsync(new(address, subject + ": " + meeting.Title, $"{meeting.Title}\n{meeting.StartTime:g} - {meeting.EndTime:g}\n{meeting.CancelReason}"), meetingId: meetingId, ct: ct);
+            var oldReminders = await db.OutgoingEmails.Where(e => e.MeetingId == meetingId && e.Kind == "Reminder" && e.SentAt == null).ToListAsync(ct);
+            db.OutgoingEmails.RemoveRange(oldReminders);
+            await db.SaveChangesAsync(ct);
+            if (meeting.Status == MeetingStatus.Confirmed)
+                foreach (var address in recipients)
+                    await emailQueue.EnqueueAsync(new(address, "Nhắc lịch họp: " + meeting.Title, $"Cuộc họp {meeting.Title} sẽ bắt đầu lúc {meeting.StartTime:g}."), meeting.StartTime.AddMinutes(-30), meetingId, "Reminder", ct);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
             logger.LogError(ex, "Meeting {MeetingId} was saved, but optional notifications could not be queued.", meetingId);
         }
     }
+    private static void InvalidateMeetingLists() => Interlocked.Increment(ref cacheVersion);
 }
