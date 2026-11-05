@@ -54,6 +54,7 @@ public class ProfileController(IAccountService accounts) : AuthenticatedControll
         }
 
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        HttpContext.Session.Clear();
         TempData["Success"] = "Đã đổi mật khẩu. Vui lòng đăng nhập lại.";
         return RedirectToAction("Login", "Account");
     }

@@ -15,6 +15,7 @@
 }}
 </div><div class="navbar-nav align-items-lg-center gap-2">
 @if(User.Identity?.IsAuthenticated == true) {
+<a class="nav-link @(c == "Security" ? "active" : "")" asp-area="" asp-controller="Security" asp-action="Index">Quản lý tài khoản</a>
 <a class="nav-link" asp-area="" asp-controller="Profile" asp-action="Index">@(User.Identity.Name ?? "Hồ sơ")</a>
 <form asp-area="" asp-controller="Account" asp-action="Logout" method="post"><button class="btn btn-sm btn-outline-secondary">Đăng xuất</button></form>
 } else { <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Account" asp-action="Login">Đăng nhập</a> }

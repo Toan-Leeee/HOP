@@ -1,0 +1,3 @@
+@model MeetingScheduler.Web.ViewModels.Departments.DepartmentViewModel
+@{ ViewData["Title"] = "Ngừng sử dụng phòng ban"; }
+<div class="page-heading"><div><div class="eyebrow">Không gian làm việc</div><h1>Ngừng sử dụng phòng ban</h1></div></div><div class="editor"><div class="alert alert-warning">Xác nhận ngừng sử dụng phòng ban <strong>@Model.DepartmentName</strong>? Dữ liệu lịch sử được giữ lại.</div><form asp-action="Delete" asp-route-id="@Model.DepartmentId" method="post"><input name="id" value="@Model.DepartmentId" type="hidden" /><div class="form-actions"><button class="btn btn-danger">Xác nhận ngừng sử dụng</button><a class="btn btn-outline-secondary" asp-action="Index">Quay lại</a></div></form></div>

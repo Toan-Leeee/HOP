@@ -6,7 +6,7 @@ public interface IEmailQueue
     bool TryEnqueue(EmailJob job);
     IAsyncEnumerable<EmailJob> ReadAllAsync(CancellationToken ct);
 }
-public class EmailQueue(IConfiguration configuration) : IEmailQueue
+public class ChannelEmailQueue(IConfiguration configuration) : IEmailQueue
 {
     private readonly Channel<EmailJob> channel = Channel.CreateBounded<EmailJob>(new BoundedChannelOptions(500) { SingleReader = true, FullMode = BoundedChannelFullMode.Wait });
     public bool TryEnqueue(EmailJob job) => SmtpSettings.IsConfigured(configuration) && channel.Writer.TryWrite(job);

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MeetingScheduler.Web.Models;
 namespace MeetingScheduler.Web.Data.Configurations;
-public class DomainConfiguration : IEntityTypeConfiguration<User>, IEntityTypeConfiguration<Role>, IEntityTypeConfiguration<Department>, IEntityTypeConfiguration<Room>, IEntityTypeConfiguration<Meeting>, IEntityTypeConfiguration<MeetingParticipant>, IEntityTypeConfiguration<AuditLog>
+public class DomainConfiguration : IEntityTypeConfiguration<User>, IEntityTypeConfiguration<Role>, IEntityTypeConfiguration<Department>, IEntityTypeConfiguration<Room>, IEntityTypeConfiguration<Meeting>, IEntityTypeConfiguration<MeetingParticipant>, IEntityTypeConfiguration<AuditLog>, IEntityTypeConfiguration<EmailQueue>
 {
     public void Configure(EntityTypeBuilder<User> b)
     {
@@ -40,5 +40,12 @@ public class DomainConfiguration : IEntityTypeConfiguration<User>, IEntityTypeCo
     {
         b.ToTable("AuditLog");
         b.HasOne(x => x.User).WithMany(x => x.AuditLogs).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
+    }
+    public void Configure(EntityTypeBuilder<EmailQueue> b)
+    {
+        b.ToTable("EmailQueue");
+        b.Property(x => x.Status).HasMaxLength(20).HasDefaultValue("Pending");
+        b.Property(x => x.AttemptCount).HasDefaultValue(0);
+        b.HasIndex(x => new { x.Status, x.ScheduledAt, x.CreatedAt });
     }
 }

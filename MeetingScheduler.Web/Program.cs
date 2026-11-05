@@ -4,6 +4,7 @@ using MeetingScheduler.Web.Models;
 using MeetingScheduler.Web.Services;
 using MeetingScheduler.Web.Services.Interfaces;
 using MeetingScheduler.Web.Services.Email;
+using MeetingScheduler.Web.Middleware;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -19,8 +20,25 @@ builder.Services.AddControllersWithViews(options => options.Filters.Add(new Auto
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddMemoryCache();
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(30); options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
-builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.Name = ".MeetingScheduler.Session";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    options.Cookie.IsEssential = true;
+});
+builder.Services.AddIdentityCore<User>(options =>
+{
+    options.Password.RequiredLength = 8;
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.User.RequireUniqueEmail = true;
+}).AddUserStore<MeetingUserStore>();
+builder.Services.AddScoped<IUserActivityStateService, UserActivityStateService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -30,7 +48,7 @@ builder.Services.AddScoped<IRsvpService, RsvpService>();
 builder.Services.AddScoped<IRoomAvailabilityService, RoomAvailabilityService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
-builder.Services.AddSingleton<IEmailQueue, EmailQueue>();
+builder.Services.AddSingleton<IEmailQueue, ChannelEmailQueue>();
 builder.Services.AddSingleton<IMailService, MailService>();
 builder.Services.AddHostedService<BackgroundEmailService>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
@@ -40,6 +58,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.ExpireTimeSpan = TimeSpan.FromHours(8);
     options.Cookie.HttpOnly = true;
     options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     options.Events.OnValidatePrincipal = async context =>
     {
         var account = context.HttpContext.RequestServices.GetRequiredService<IAccountService>();
@@ -59,6 +78,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 app.UseAuthentication();
+app.UseMiddleware<UserActivityMiddleware>();
 app.UseAuthorization();
 app.MapControllerRoute("areas", "{area:exists}/{controller=Room}/{action=Index}/{id?}");
 app.MapControllerRoute("default", "{controller=Meeting}/{action=Index}/{id?}");

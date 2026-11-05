@@ -35,7 +35,7 @@ Add-Migration TenThayDoiMoi
 Update-Database
 ```
 
-Trong SQL Server Object Explorer, kết nối `(localdb)\MSSQLLocalDB`, mở Databases > MeetingSchedulerLab > Tables để chụp minh chứng database và 7 bảng.
+Trong SQL Server Object Explorer, kết nối `(localdb)\MSSQLLocalDB`, mở Databases > MeetingSchedulerLab > Tables để chụp minh chứng database và 8 bảng.
 
 ## Chạy bằng terminal
 
@@ -56,11 +56,11 @@ Xem `docs/STRUCTURE.md`, `docs/ENTITY_DICTIONARY.md`, `docs/ERD.md`, `docs/DATA_
 
 Controller nhận ViewModel, kiểm tra ModelState, gọi Service. Service xử lý nghiệp vụ, DbContext và LINQ. View/JSON chỉ sử dụng ViewModel. Query Pipeline: Where -> OrderBy -> CountAsync -> Skip/Take -> ToListAsync.
 
-Code chung gồm 7 entity và một DbContext. Các module cá nhân theo đề xuất trong rules là Room, theo dõi RSVP và Report; solution cũng có các module dùng chung để chạy luồng đặt lịch từ đầu đến cuối. Phân công nhóm và các trường bổ sung vẫn là giả định kỹ thuật theo file rules, không phải xác nhận của các thành viên.
+Code chung hiện có 8 entity và một DbContext (7 entity nghiệp vụ, gồm EmailQueue, cùng AuditLog). Các module cá nhân theo đề xuất trong rules là Room, theo dõi RSVP và Report; solution cũng có các module dùng chung để chạy luồng đặt lịch từ đầu đến cuối. Phân công nhóm và các trường bổ sung vẫn là giả định kỹ thuật theo file rules, không phải xác nhận của các thành viên.
 
 ## Email
 
-Mặc định SMTP chưa cấu hình; lịch họp vẫn được lưu và không báo email đã gửi. Muốn gửi thư thật, đặt `Smtp:Host`, `Smtp:From`, `Smtp:Username`, `Smtp:Password` bằng User Secrets hoặc biến môi trường. Không ghi mật khẩu thật vào appsettings hoặc Git. Hàng đợi email trong bộ nhớ phục vụ demo, không bảo đảm giao thư sau khi khởi động lại.
+Mặc định SMTP chưa cấu hình; lịch họp vẫn được lưu và không báo email đã gửi. Muốn gửi thư thật, đặt `Smtp:Host`, `Smtp:From`, `Smtp:Username`, `Smtp:Password` bằng User Secrets hoặc biến môi trường. Không ghi mật khẩu thật vào appsettings hoặc Git. Entity EmailQueue đã có schema và migration outbox; BackgroundEmailService hiện vẫn đọc hàng đợi trong bộ nhớ, chưa ghi/đọc outbox SQL. Vì vậy thư đang chờ trong bộ nhớ không được bảo đảm sau khi khởi động lại.
 
 ## Kiểm tra
 

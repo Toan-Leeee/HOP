@@ -1,0 +1,219 @@
+<mxfile host="Electron">
+  <diagram id="meeting-erd" name="ERD 7 bảng">
+    <mxGraphModel dx="1704" dy="1054" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1530" pageHeight="1210" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Role" parent="1" style="swimlane;html=1;startSize=34;horizontal=1;collapsible=0;rounded=0;fillColor=#dcebf8;swimlaneFillColor=#ffffff;strokeColor=#8191a0;fontColor=#16324a;align=left;spacingLeft=12;fontFamily=Arial;fontSize=17;container=1;" value="&lt;b&gt;Role&lt;/b&gt;&amp;nbsp;" vertex="1">
+          <mxGeometry height="86" width="330" x="60" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="Role.RoleId" parent="Role" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;RoleId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="330" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Role.RoleName" parent="Role" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;UK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;RoleName&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(50)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="330" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Department" parent="1" style="swimlane;html=1;startSize=34;horizontal=1;collapsible=0;rounded=0;fillColor=#dcefe6;swimlaneFillColor=#ffffff;strokeColor=#8191a0;fontColor=#16324a;align=left;spacingLeft=12;fontFamily=Arial;fontSize=17;container=1;" value="&lt;b&gt;Department&lt;/b&gt;  &lt;span style=&quot;font-size:12px&quot;&gt;Phòng ban&lt;/span&gt;" vertex="1">
+          <mxGeometry height="112" width="330" x="60" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="Department.DepartmentId" parent="Department" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;DepartmentId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="330" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Department.DepartmentName" parent="Department" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;UK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;DepartmentName&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(100)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="330" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Department.IsDisabled" parent="Department" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;IsDisabled&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: bit&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="330" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="User" parent="1" style="swimlane;html=1;startSize=34;horizontal=1;collapsible=0;rounded=0;fillColor=#dcebf8;swimlaneFillColor=#ffffff;strokeColor=#8191a0;fontColor=#16324a;align=left;spacingLeft=12;fontFamily=Arial;fontSize=17;container=1;" value="&lt;b&gt;User&lt;/b&gt;&amp;nbsp;" vertex="1">
+          <mxGeometry height="242" width="360" x="550" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="User.UserId" parent="User" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;UserId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="User.FullName" parent="User" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;FullName&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(100)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="User.Email" parent="User" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;UK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Email&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: varchar(100)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="User.Phone" parent="User" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Phone&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: varchar(20) ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="User.PasswordHash" parent="User" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;PasswordHash&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: varchar(255)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="User.RoleId" parent="User" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;RoleId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="User.DepartmentId" parent="User" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;DepartmentId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="User.IsDisabled" parent="User" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;IsDisabled&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: bit&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="216" as="geometry" />
+        </mxCell>
+        <mxCell id="Room" parent="1" style="swimlane;html=1;startSize=34;horizontal=1;collapsible=0;rounded=0;fillColor=#dcefe6;swimlaneFillColor=#ffffff;strokeColor=#8191a0;fontColor=#16324a;align=left;spacingLeft=12;fontFamily=Arial;fontSize=17;container=1;" value="&lt;b&gt;Room&lt;/b&gt;&amp;nbsp;" vertex="1">
+          <mxGeometry height="216" width="400" x="1070" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Room.RoomId" parent="Room" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;RoomId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Room.RoomName" parent="Room" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;UK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;RoomName&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(100)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Room.Location" parent="Room" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Location&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(200) ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="Room.Capacity" parent="Room" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Capacity&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int &amp;gt; 0&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="Room.Equipment" parent="Room" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Equipment&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(500) ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="Room.Status" parent="Room" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Status&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(20)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="Room.IsDisabled" parent="Room" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;IsDisabled&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: bit&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting" parent="1" style="swimlane;html=1;startSize=34;horizontal=1;collapsible=0;rounded=0;fillColor=#dcebf8;swimlaneFillColor=#ffffff;strokeColor=#8191a0;fontColor=#16324a;align=left;spacingLeft=12;fontFamily=Arial;fontSize=17;container=1;" value="&lt;b&gt;Meeting&lt;/b&gt;&amp;nbsp;" vertex="1">
+          <mxGeometry height="398" width="400" x="1070" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.MeetingId" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;MeetingId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.Title" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Title&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(200)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.Description" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Description&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(max) ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.StartTime" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;StartTime&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: datetime&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.EndTime" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;EndTime&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: datetime&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.RoomId" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;RoomId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.CreatedByUserId" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;CreatedByUserId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.Status" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Status&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(20)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="216" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.RowVersion" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;RowVersion&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: rowversion&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="242" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.CancelledAt" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;CancelledAt&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: datetime ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="268" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.CancelledByUserId" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;CancelledByUserId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="294" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.CancelReason" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;CancelReason&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(500) ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.CreatedAt" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;CreatedAt&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: datetime&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="346" as="geometry" />
+        </mxCell>
+        <mxCell id="Meeting.UpdatedAt" parent="Meeting" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;UpdatedAt&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: datetime ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="400" y="372" as="geometry" />
+        </mxCell>
+        <mxCell id="MeetingParticipant" parent="1" style="swimlane;html=1;startSize=34;horizontal=1;collapsible=0;rounded=0;fillColor=#fff0ce;swimlaneFillColor=#ffffff;strokeColor=#8191a0;fontColor=#16324a;align=left;spacingLeft=12;fontFamily=Arial;fontSize=17;container=1;" value="&lt;b&gt;MeetingParticipant&lt;/b&gt;&amp;nbsp;" vertex="1">
+          <mxGeometry height="138" width="360" x="550" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="MeetingParticipant.MeetingId" parent="MeetingParticipant" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;PK, FK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;MeetingId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="MeetingParticipant.UserId" parent="MeetingParticipant" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;PK, FK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;UserId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MeetingParticipant.Status" parent="MeetingParticipant" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Status&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(20)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="MeetingParticipant.RespondedAt" parent="MeetingParticipant" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;RespondedAt&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: datetime ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="AuditLog" parent="1" style="swimlane;html=1;startSize=34;horizontal=1;collapsible=0;rounded=0;fillColor=#eee5f4;swimlaneFillColor=#ffffff;strokeColor=#8191a0;fontColor=#16324a;align=left;spacingLeft=12;fontFamily=Arial;fontSize=17;container=1;" value="&lt;b&gt;AuditLog&lt;/b&gt;" vertex="1">
+          <mxGeometry height="216" width="360" x="60" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="AuditLog.AuditLogId" parent="AuditLog" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;AuditLogId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="AuditLog.UserId" parent="AuditLog" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;UserId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AuditLog.Action" parent="AuditLog" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Action&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(100)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="AuditLog.EntityName" parent="AuditLog" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;EntityName&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(100)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="AuditLog.EntityId" parent="AuditLog" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;EntityId&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="AuditLog.CreatedAt" parent="AuditLog" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;CreatedAt&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: datetime&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="AuditLog.Details" parent="AuditLog" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=10;strokeColor=#e1e7ed;fillColor=#ffffff;fontFamily=Arial;movable=0;resizable=0;" value="&lt;table style=&quot;width:100%;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:53px;font-size:11px;color:#405569&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td style=&quot;font-size:13px&quot;&gt;Details&lt;/td&gt;&lt;td style=&quot;text-align:right;font-size:12px;color:#506175&quot;&gt;&amp;nbsp;: nvarchar(max) ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="26" width="360" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="fk-role" edge="1" parent="1" source="Role" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#536a80;startArrow=ERmandOne;endArrow=ERzeroToMany;startSize=12;endSize=12;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.165;entryPerimeter=0;" target="User">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="263" />
+              <mxPoint x="470" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk-department" edge="1" parent="1" source="Department" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#536a80;startArrow=ERmandOne;endArrow=ERzeroToMany;startSize=12;endSize=12;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.62;entryPerimeter=0;" target="User">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="446" />
+              <mxPoint x="430" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk-organizer" edge="1" parent="1" source="User" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#536a80;startArrow=ERmandOne;endArrow=ERzeroToMany;startSize=12;endSize=12;exitX=1;exitY=0.3;exitPerimeter=0;entryX=0;entryY=0.25;entryPerimeter=0;" target="Meeting">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="323" />
+              <mxPoint x="1010" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk-canceller" edge="1" parent="1" source="User" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#9a6262;startArrow=ERzeroToOne;endArrow=ERzeroToMany;startSize=12;endSize=12;exitX=1;exitY=0.8;exitPerimeter=0;entryX=0;entryY=0.68;entryPerimeter=0;" target="Meeting">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="444" />
+              <mxPoint x="960" y="771" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk-room" edge="1" parent="1" source="Room" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#536a80;startArrow=ERmandOne;endArrow=ERzeroToMany;startSize=12;endSize=12;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;" target="Meeting">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fk-user-participant" edge="1" parent="1" source="User" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#536a80;startArrow=ERmandOne;endArrow=ERzeroToMany;startSize=12;endSize=12;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;" target="MeetingParticipant">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fk-meeting-participant" edge="1" parent="1" source="Meeting" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#536a80;startArrow=ERmandOne;endArrow=ERzeroToMany;startSize=12;endSize=12;exitX=0;exitY=0.94;exitPerimeter=0;entryX=1;entryY=0.55;entryPerimeter=0;" target="MeetingParticipant">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="990" y="874" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk-audit" edge="1" parent="1" source="User" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#536a80;startArrow=ERmandOne;endArrow=ERzeroToMany;startSize=12;endSize=12;exitX=0;exitY=0.8;exitPerimeter=0;entryX=1;entryY=0.42;entryPerimeter=0;" target="AuditLog">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="444" />
+              <mxPoint x="480" y="851" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

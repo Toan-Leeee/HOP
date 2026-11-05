@@ -1,0 +1,67 @@
+@model MeetingScheduler.Web.ViewModels.SecurityViewModel
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+    var activity = Model.Activity;
+    var roleLabel = Model.RoleName switch
+    {
+        "Admin" => "Quản trị viên",
+        "Organizer" => "Người tổ chức",
+        "Employee" => "Nhân viên",
+        _ => "Người dùng"
+    };
+}
+<div class="page-heading">
+    <div><div class="eyebrow">Tài khoản</div><h1>Quản lý tài khoản</h1></div>
+</div>
+<p class="text-secondary">Quản lý thông tin cá nhân, theo dõi hoạt động và xem quyền sử dụng trong hệ thống lịch họp.</p>
+
+<section class="security-section">
+    <div class="account-section-heading">
+        <div><h2>Thông tin tài khoản</h2><p class="text-secondary">Thông tin hồ sơ và quyền hiện tại của bạn.</p></div>
+        <span class="status">Đang hoạt động</span>
+    </div>
+    <dl class="detail-grid">
+        <dt>Họ và tên</dt><dd>@Model.FullName</dd>
+        <dt>Email</dt><dd>@Model.Email</dd>
+        <dt>Phòng ban</dt><dd>@Model.DepartmentName</dd>
+        <dt>Vai trò</dt><dd>@roleLabel</dd>
+    </dl>
+    <div class="account-actions">
+        <a class="btn btn-primary" asp-controller="Profile" asp-action="Index">Cập nhật hồ sơ</a>
+        <a class="btn btn-outline-secondary" asp-controller="Profile" asp-action="ChangePassword">Đổi mật khẩu</a>
+    </div>
+</section>
+
+<section class="security-section">
+    <h2>Hoạt động gần đây</h2>
+    <p class="text-secondary">Một số thông tin sử dụng được ghi nhớ trên thiết bị này để giúp bạn theo dõi hoạt động của mình.</p>
+    <dl class="detail-grid">
+        <dt>Số lượt sử dụng</dt><dd>@activity.VisitCount</dd>
+        <dt>Truy cập gần nhất</dt><dd>@(activity.LastAccessUtc?.ToLocalTime().ToString("dd/MM/yyyy HH:mm") ?? "Chưa có dữ liệu")</dd>
+        <dt>Chức năng thường dùng</dt><dd>@activity.MostUsedFeature</dd>
+        <dt>Đăng nhập hiện tại lúc</dt><dd>@(activity.LoginAtUtc?.ToLocalTime().ToString("dd/MM/yyyy HH:mm") ?? "Không có dữ liệu")</dd>
+    </dl>
+    <form asp-action="ResetUsage" method="post" class="account-actions">
+        <button class="btn btn-outline-secondary" type="submit">Xóa lịch sử hoạt động trên thiết bị này</button>
+    </form>
+</section>
+
+<section class="security-section">
+    <h2>Quyền sử dụng</h2>
+    <p class="text-secondary">Quyền được cấp theo vai trò tài khoản và phạm vi cuộc họp liên quan.</p>
+    <ul class="permission-list">
+        @if (Model.CanManageMeetings)
+        {
+            <li>Tạo, cập nhật và hủy lịch họp theo phạm vi được phép.</li>
+            <li>Theo dõi phản hồi tham dự của các cuộc họp do bạn tổ chức.</li>
+        }
+        else
+        {
+            <li>Xem lịch họp liên quan và phản hồi lời mời tham dự.</li>
+        }
+        @if (Model.CanManageSystem)
+        {
+            <li>Quản lý nhân sự, phòng ban, phòng họp và báo cáo toàn hệ thống.</li>
+        }
+    </ul>
+</section>

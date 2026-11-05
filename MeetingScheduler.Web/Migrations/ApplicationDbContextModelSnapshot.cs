@@ -85,6 +85,60 @@ namespace MeetingScheduler.Web.Migrations
                     b.ToTable("Department", (string)null);
                 });
 
+            modelBuilder.Entity("MeetingScheduler.Web.Models.EmailQueue", b =>
+                {
+                    b.Property<int>("EmailQueueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmailQueueId"));
+
+                    b.Property<int>("AttemptCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("LastError")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("RecipientEmail")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("nvarchar(320)");
+
+                    b.Property<DateTime?>("ScheduledAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("SentAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValue("Pending");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("EmailQueueId");
+
+                    b.HasIndex("Status", "ScheduledAt", "CreatedAt");
+
+                    b.ToTable("EmailQueue", (string)null);
+                });
+
             modelBuilder.Entity("MeetingScheduler.Web.Models.Meeting", b =>
                 {
                     b.Property<int>("MeetingId")

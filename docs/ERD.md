@@ -1,6 +1,6 @@
-# ERD: 7 thực thể
+# ERD: 8 thực thể
 
-Theo G1/G2 rules và `Data/Configurations/DomainConfiguration.cs`. AuditLog cùng các trường đánh dấu bổ sung trong [ENTITY_DICTIONARY.md](ENTITY_DICTIONARY.md) là baseline suy luận ngoài SRS, chưa phải xác nhận nhóm.
+Theo G1/G2 rules, `Data/Configurations/DomainConfiguration.cs` và migration `AddEmailQueueOutbox`. EmailQueue là entity hàng đợi email theo bản phân công đã chốt; AuditLog là entity bổ sung phục vụ nhật ký quản trị.
 
 ```mermaid
 erDiagram
@@ -12,6 +12,20 @@ erDiagram
     Meeting ||--o{ MeetingParticipant : "MeetingId"
     User ||--o{ MeetingParticipant : "UserId"
     User ||--o{ AuditLog : "UserId actor"
+
+    %% EmailQueue không có FK để hàng đợi giữ được nội dung khi lịch/người dùng thay đổi.
+    EmailQueue {
+        int EmailQueueId PK
+        nvarchar320 RecipientEmail
+        nvarchar200 Subject
+        nvarcharMAX Body
+        datetime CreatedAt
+        datetime ScheduledAt "nullable"
+        nvarchar20 Status
+        int AttemptCount
+        datetime SentAt "nullable"
+        nvarchar1000 LastError "nullable"
+    }
 
     Role {
         int RoleId PK "1 Admin, 2 Organizer, 3 Employee"
@@ -73,6 +87,8 @@ erDiagram
         nvarcharMAX Details "nullable"
     }
 ```
+
+EmailQueue được lưu độc lập, không FK tới Meeting/User; trạng thái mặc định Pending và có index phục vụ worker lấy thư đến hạn.
 
 Mỗi User bắt buộc có một Role và một Department. Mỗi Meeting bắt buộc có một Room và một organizer; có thể không có người hủy khi chưa hủy. Một bản ghi MeetingParticipant bắt buộc thuộc đúng một Meeting và một User; cặp MeetingId/UserId duy nhất tạo quan hệ n-n Meeting/User. Parent có thể có 0 bản ghi con; `o{` không có nghĩa FK con nullable.
 

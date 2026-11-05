@@ -1,0 +1,52 @@
+@model MeetingScheduler.Web.ViewModels.Rooms.RoomFilter
+@{ ViewData["Title"] = "Phòng họp"; }
+<div id="room-app" data-list="@Url.Action("ListJson")" data-save="@Url.Action("SaveJson")"
+     data-disable="@Url.Action("DisableJson")" data-restore="@Url.Action("RestoreJson")">
+    <div class="page-heading">
+        <div><div class="eyebrow">Không gian làm việc</div><h1>Phòng họp</h1></div>
+        <button class="btn btn-primary" id="room-add"><i data-lucide="plus" aria-hidden="true"></i> Thêm phòng họp</button>
+    </div>
+    <div id="room-notice" role="status" aria-live="polite" hidden></div>
+    <form id="room-filters" class="filter-bar">
+        <div class="filter-field search"><label for="search" class="form-label">Tìm kiếm</label><input id="search" name="SearchString" value="@Model.SearchString" class="form-control" placeholder="Tên phòng họp" /></div>
+        <div class="filter-field"><label for="status" class="form-label">Trạng thái phòng</label><select id="status" name="Status" class="form-select"><option value="">Tất cả</option><option value="Active" selected="@(Model.Status?.ToString() == "Active")">Sẵn sàng</option><option value="Maintenance" selected="@(Model.Status?.ToString() == "Maintenance")">Bảo trì</option></select></div>
+        <div class="filter-field"><label for="capacity" class="form-label">Sức chứa tối thiểu</label><input id="capacity" name="MinimumCapacity" value="@Model.MinimumCapacity" type="number" min="1" class="form-control" /></div>
+        <div class="filter-field"><label for="disabled" class="form-label">Trạng thái sử dụng</label><select id="disabled" name="IsDisabled" class="form-select"><option value="false" selected="@(Model.IsDisabled != true)">Đang sử dụng</option><option value="true" selected="@(Model.IsDisabled == true)">Đã ngừng sử dụng</option></select></div>
+        <div class="filter-field"><label for="sort" class="form-label">Sắp xếp</label><select id="sort" name="SortOrder" class="form-select"><option value="">Tên phòng A–Z</option><option value="name_desc" selected="@(Model.SortOrder == "name_desc")">Tên phòng Z–A</option><option value="capacity" selected="@(Model.SortOrder == "capacity")">Sức chứa tăng</option><option value="capacity_desc" selected="@(Model.SortOrder == "capacity_desc")">Sức chứa giảm</option></select></div>
+        <div class="filter-field"><label for="pageSize" class="form-label">Số dòng</label><select id="pageSize" name="PageSize" class="form-select">@foreach (var size in new[] { 5, 10, 20, 50 }) { <option value="@size" selected="@(Model.PageSize == size)">@size</option> }</select></div>
+        <button class="btn btn-primary" type="submit"><i data-lucide="search" aria-hidden="true"></i> Lọc</button>
+        <button class="btn btn-outline-secondary" type="button" id="room-reset" title="Đặt lại bộ lọc" aria-label="Đặt lại bộ lọc"><i data-lucide="rotate-ccw" aria-hidden="true"></i></button>
+    </form>
+    <div id="room-loading" role="status" aria-live="polite"></div>
+    <div class="table-responsive" id="room-table-wrap" aria-busy="true">
+        <table class="table" style="min-width:720px"><thead><tr><th scope="col">Phòng họp</th><th scope="col">Sức chứa</th><th scope="col">Trang thiết bị</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead><tbody id="room-rows"></tbody></table>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3">
+        <span id="room-count" aria-live="polite"></span>
+        <nav aria-label="Phân trang phòng họp" class="d-flex gap-2 align-items-center">
+            <button type="button" id="room-prev" class="btn btn-outline-secondary" aria-label="Trang trước" title="Trang trước"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
+            <span id="room-page"></span>
+            <button type="button" id="room-next" class="btn btn-outline-secondary" aria-label="Trang sau" title="Trang sau"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
+        </nav>
+    </div>
+    <noscript><p>JavaScript chưa được bật. <a asp-action="Traditional">Mở danh sách thông thường</a>.</p></noscript>
+</div>
+<div class="modal fade" id="room-modal" tabindex="-1" aria-labelledby="room-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+        <form id="room-editor">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="RoomId" value="0" />
+            <div class="modal-header"><h2 class="modal-title fs-5" id="room-modal-title">Thêm phòng họp</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button></div>
+            <div class="modal-body">
+                <div id="room-errors" class="alert alert-danger" role="alert" hidden></div>
+                <div class="mb-3"><label for="room-name" class="form-label">Tên phòng họp</label><input id="room-name" name="RoomName" class="form-control" required maxlength="100" /></div>
+                <div class="mb-3"><label for="room-location" class="form-label">Vị trí</label><input id="room-location" name="Location" class="form-control" maxlength="200" /></div>
+                <div class="mb-3"><label for="room-capacity" class="form-label">Sức chứa</label><input id="room-capacity" name="Capacity" type="number" min="1" max="2147483647" value="1" required class="form-control" /></div>
+                <div class="mb-3"><label for="room-equipment" class="form-label">Trang thiết bị</label><textarea id="room-equipment" name="Equipment" rows="3" maxlength="500" class="form-control"></textarea></div>
+                <label for="room-status" class="form-label">Trạng thái phòng</label><select id="room-status" name="Status" class="form-select"><option value="Active">Sẵn sàng</option><option value="Maintenance">Bảo trì</option></select>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button><button type="submit" class="btn btn-primary" id="room-save"><i data-lucide="save" aria-hidden="true"></i> Lưu thay đổi</button></div>
+        </form>
+    </div></div>
+</div>
+@section Scripts { <script src="~/js/room-ajax.js" asp-append-version="true"></script> }

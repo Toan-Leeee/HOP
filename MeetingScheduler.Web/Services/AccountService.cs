@@ -6,7 +6,7 @@ using MeetingScheduler.Web.ViewModels.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 namespace MeetingScheduler.Web.Services;
-public class AccountService(ApplicationDbContext db, IPasswordHasher<User> hasher) : IAccountService
+public class AccountService(ApplicationDbContext db, UserManager<User> userManager) : IAccountService
 {
     public Task<bool> ValidateSessionAsync(int userId, string roleName, CancellationToken ct = default) =>
         db.Users.AsNoTracking().AnyAsync(u => u.UserId == userId && !u.IsDisabled && !u.Department.IsDisabled && u.Role.RoleName == roleName, ct);
@@ -16,11 +16,10 @@ public class AccountService(ApplicationDbContext db, IPasswordHasher<User> hashe
         var email = m.Email.Trim().ToLowerInvariant();
         var user = await db.Users.Include(u => u.Role).Include(u => u.Department).FirstOrDefaultAsync(u => u.Email == email && !u.IsDisabled && !u.Department.IsDisabled, ct);
         if (user == null) return null;
-        PasswordVerificationResult result;
-        try { result = hasher.VerifyHashedPassword(user, user.PasswordHash, m.Password); }
+        bool passwordValid;
+        try { passwordValid = await userManager.CheckPasswordAsync(user, m.Password); }
         catch (FormatException) { return null; }
-        if (result == PasswordVerificationResult.Failed) return null;
-        if (result == PasswordVerificationResult.SuccessRehashNeeded) user.PasswordHash = hasher.HashPassword(user, m.Password);
+        if (!passwordValid) return null;
         db.AuditLogs.Add(ServiceSupport.Audit(user.UserId, "Login", "User", user.UserId));
         await db.SaveChangesAsync(ct);
         return new(user.UserId, user.FullName, user.Email, user.Role.RoleName);
@@ -42,11 +41,17 @@ public class AccountService(ApplicationDbContext db, IPasswordHasher<User> hashe
         var error = ServiceSupport.Validate(m); if (error != null) return ServiceResult.Failure(error);
         var user = await db.Users.FirstOrDefaultAsync(u => u.UserId == userId && !u.IsDisabled && !u.Department.IsDisabled, ct);
         if (user == null) return ServiceResult.Failure("Không tìm thấy tài khoản đang hoạt động.");
-        PasswordVerificationResult result;
-        try { result = hasher.VerifyHashedPassword(user, user.PasswordHash, m.CurrentPassword); }
+        IdentityResult result;
+        try { result = await userManager.ChangePasswordAsync(user, m.CurrentPassword, m.NewPassword); }
         catch (FormatException) { return ServiceResult.Failure("Mật khẩu hiện tại không đúng."); }
-        if (result == PasswordVerificationResult.Failed) return ServiceResult.Failure("Mật khẩu hiện tại không đúng.");
-        user.PasswordHash = hasher.HashPassword(user, m.NewPassword);
-        return await ServiceSupport.CommitAsync(db, userId, "ChangePassword", "User", () => userId, ct);
+        if (!result.Succeeded)
+        {
+            if (result.Errors.Any(e => e.Code == "PasswordMismatch"))
+                return ServiceResult.Failure("Mật khẩu hiện tại không đúng.");
+            return ServiceResult.Failure(string.Join(" ", result.Errors.Select(e => e.Description)));
+        }
+        db.AuditLogs.Add(ServiceSupport.Audit(userId, "ChangePassword", "User", userId));
+        await db.SaveChangesAsync(ct);
+        return ServiceResult.Success(userId);
     }
 }

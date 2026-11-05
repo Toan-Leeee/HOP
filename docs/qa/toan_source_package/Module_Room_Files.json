@@ -1,0 +1,46 @@
+[
+  {
+    "path": "MeetingScheduler.Web/Models/Room.cs",
+    "sha256": "1386ace1629fa0db340625c2b7081ef19ed655518eecfa8f609bc316f935d342"
+  },
+  {
+    "path": "MeetingScheduler.Web/Models/Enums/Statuses.cs",
+    "sha256": "3d138cf6c66bf26120b09797654726e4422455ff28aa6a45a3c54b934897cf91"
+  },
+  {
+    "path": "MeetingScheduler.Web/ViewModels/Rooms/RoomViewModels.cs",
+    "sha256": "4c040a7cc2f2ef70b77ef0dcf7aabe56ae09445eab84a86d0b4394fe62caeade"
+  },
+  {
+    "path": "MeetingScheduler.Web/Services/RoomService.cs",
+    "sha256": "47738dd13a5fdd4aac7eeba78ea698436f5b85a5cb93181f6e05ced0bfef6a6f"
+  },
+  {
+    "path": "MeetingScheduler.Web/Services/Interfaces/ServiceContracts.cs",
+    "sha256": "2a9d0cb251f5f63b7cb7ff939483ef928e879b94fee6003db1e6d1ee9c406103"
+  },
+  {
+    "path": "MeetingScheduler.Web/Areas/Admin/Controllers/RoomController.cs",
+    "sha256": "dc374f9a55b764c5728863c9bbfbffe6c403b6a7c588f59b605cbd20ca23071c"
+  },
+  {
+    "path": "MeetingScheduler.Web/Areas/Admin/Views/Room/Index.cshtml",
+    "sha256": "e402842ee87956b62ec78f7adbb2d55ffee4f10049846ea81822b4cd4c5f51f3"
+  },
+  {
+    "path": "MeetingScheduler.Web/Areas/Admin/Views/Room/Details.cshtml",
+    "sha256": "55710be8a6c4a318b879fa717b747e125f650abcb793a0834135df308bb68296"
+  },
+  {
+    "path": "MeetingScheduler.Web/Areas/Admin/Views/Room/Create.cshtml",
+    "sha256": "7c6934950274cdc9667a6f325acfc116e13477d18b8ead1b9e024b28746a5a77"
+  },
+  {
+    "path": "MeetingScheduler.Web/Areas/Admin/Views/Room/Edit.cshtml",
+    "sha256": "a37f1a048309b00c92a977127b25fdea8ac7735848bfda96d6449396df6dc31b"
+  },
+  {
+    "path": "MeetingScheduler.Web/Areas/Admin/Views/Room/Delete.cshtml",
+    "sha256": "76232f6823a38447c0a918d1a34c7f9e9b029d76c4dafaff19ee3e00d895cbf0"
+  }
+]
